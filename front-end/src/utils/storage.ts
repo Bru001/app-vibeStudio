@@ -1,8 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const saveUser = async (user: any, token: string) => {
+
+interface Usuario{
+  nome: string,
+  email: string
+  imagemPerfil: string
+}
+
+export const saveUser = async (user: Usuario, token: string) => {
   await AsyncStorage.setItem("usuario", JSON.stringify(user));
   await AsyncStorage.setItem("token", token);
+};
+
+export const obterUsuario = async(): Promise<Usuario | null> => {
+ const usuario = await AsyncStorage.getItem('usuario');
+ return usuario ? JSON.parse(usuario) : null;
 };
 
 export const getToken = async () => {

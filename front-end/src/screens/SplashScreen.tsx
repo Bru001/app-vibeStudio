@@ -1,28 +1,40 @@
-import React, { useEffect } from "react";
-import { 
-  View, 
-  Text, 
-  ActivityIndicator, 
-  StyleSheet 
-} from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import VibeStudio from "./../assets/svgs/vibeStudio";
+
 export default function SplashScreen({ navigation }: any) {
+  const [dots, setDots] = useState(0);
+
+  // Animação
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots(prev => (prev >= 3 ? 0 : prev + 1));
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const checkLogin = async () => {
-      const user = await AsyncStorage.getItem("usuario");
+      const token = await AsyncStorage.getItem("token");
       setTimeout(() => {
-        navigation.replace(user ? "Home" : "Login");
+        navigation.replace(token ? "MainTabs" : "Login");
       }, 2000);
     };
     checkLogin();
-  }, []);
+  }, [navigation]);
+
+  const dotsDisplay = ".".repeat(dots) + " ".repeat(3 - dots);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>QR Tech</Text>
-      <ActivityIndicator size="large" color="#fff" />
+      <VibeStudio width={350} height={200} />
+
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Carregando{dotsDisplay}</Text>
+      </View>
     </View>
   );
 }
@@ -32,12 +44,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#0969fb",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
-  logo: {
-    fontSize: 30,
+  loadingContainer: {
+    position: "absolute",
+    bottom: 45,
+    right: 45,
+  },
+  loadingText: {
     color: "#fff",
-    fontWeight: "bold",
-    marginBottom: 20
+    fontSize: 18,
+    fontWeight: "500",
   },
 });

@@ -8,9 +8,8 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#4a66e6"
+      "backgroundColor": "#0969fb"
     },
     "ios": {
       "supportsTablet": true
@@ -18,7 +17,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#4a66e6"
+        "backgroundColor": "#0969fb"
       },
       "edgeToEdgeEnabled": true
     },
@@ -26,7 +25,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-barcode-scanner"
+    
     ]
   }
 }
